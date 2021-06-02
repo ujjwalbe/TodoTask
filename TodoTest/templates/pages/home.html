@@ -77,7 +77,7 @@
   function loadProject(clicked_id) {
 
     url = `/api/v1/task/get/project/${clicked_id}`
-
+    var asana_url = `/api/v1/task/asana/task/${clicked_id}`
     fetch(url)
       .then(response => response.json())
       .then(data => {
@@ -97,6 +97,7 @@
         });
         taskListDiv.innerHTML = htmlDataList
       });
+    fetch(asana_url).then(response => response.json()).then(data => console.log(data));
   }
 
 

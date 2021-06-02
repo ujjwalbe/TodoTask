@@ -75,3 +75,28 @@ def create_project(name, description, project):
     print(resp)
 
 
+def update(project, project_obj, task_obj, asana_id ):
+    asana_id = asana_id
+
+    endpoint = f"https://app.asana.com/api/1.0/projects/{asana_id}/tasks"
+    headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
+    resp = requests.get(endpoint, headers=headers).json()
+    asana_task = resp['data']
+    project_inst = project_obj.objects.get(id=project)
+    tasks = task_obj.objects.filter(project=project)
+    print(tasks)
+    add_task = []
+    if len(tasks) > 0:
+        for task in asana_task:
+            for tsk in tasks:
+                if tsk.asana_task_id != task['gid']:
+                    add_task.append(task)
+    elif len(asana_task) >0:
+        for task in asana_task:
+            add_task.append(task)
+    print(add_task)
+    if len(add_task) > 0:
+        for task in add_task:
+            print(task)
+            obj = task_obj.objects.create(project=project_inst, name=task['name'], description=task['name'], asana_task_id=task['gid'], is_synced=True)
+    print(resp)

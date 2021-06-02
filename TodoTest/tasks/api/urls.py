@@ -13,5 +13,5 @@ urlpatterns=[
     re_path(r'', include(router.urls), name='tasks'),
     path('get/<str:id>', views.GetTaskView.as_view(), name='get'),
     path('get/project/<str:id>', views.GetProjectTaskView.as_view(), name='get'),
-
+    path('asana/task/<str:id>', views.UpdateAsanaTask.as_view(), name='asana'),
 ]

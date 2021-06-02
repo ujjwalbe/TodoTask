@@ -57,20 +57,21 @@ def task_post_save_receiver(sender, instance, created, *args, **kwargs):
     Sync with asana
     """
     if created:
-        asana_task.create_task(
-            "pending",
-            False,
-            str(datetime.datetime.now()),
-            False,
-            instance.name,
-            instance.description,
-            [instance.project.asana_id],
-            str(datetime.datetime.now()),
-            task_id=instance.id,
-            model=instance
-        )
-        instance.is_synced=True
-        instance.save()
+        if instance.asana_task_id == None:
+            asana_task.create_task(
+                "pending",
+                False,
+                str(datetime.datetime.now()),
+                False,
+                instance.name,
+                instance.description,
+                [instance.project.asana_id],
+                str(datetime.datetime.now()),
+                task_id=instance.id,
+                model=instance
+            )
+            instance.is_synced=True
+            instance.save()
 
 
 post_save.connect(task_post_save_receiver, sender=Task)
