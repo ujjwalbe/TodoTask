@@ -1,0 +1,106 @@
+{% load static i18n %}
+
+
+
+<div class="row-sm-3  ">
+  <div class="row logo">
+    <div class="logo-child">
+      <h1 id='logo-text'>To-Do</h1>
+    </div>
+  </div>
+  <div class="scroll-div">
+    <div class="row v-tag flex-container">
+      <div class="col-sm-4">
+        <a id="list-tag" href="#">List</a>
+      </div>
+      <div class="col-sm-4">
+        <a href="#">Tags</a>
+
+      </div>
+      <div class="col-sm-4">
+        <a href="#">Custom</a>
+
+      </div>
+    </div>
+
+    <div class="row project-list">
+      <ul class="nav nav-pills nav-stacked">
+        {% for project in projects%}
+        <li class="active">
+          <div class="image-block">
+            <i class="image-item fas fa-user-shield"></i>
+
+            <a id="{{project.id}}" onclick="loadProject(this.id)" href="#">{{ project.name }}</a>
+          </div>
+        </li>
+        {% endfor%}
+
+        <li class="active">
+          <div class="image-block">
+            <i class="image-item fas fa-clipboard-list"></i>
+
+
+            <a href="{% url 'task_web:new-list'%}">Create List +</a>
+          </div>
+        </li> 
+      </ul>
+    </div>
+    <br>
+    <h4 id='filters'>Filters</h4>
+    <div class="row filters-list">
+      <ul class="nav nav-pills nav-stacked">
+
+        <li class="active">
+          <div class="image-block">
+            <i class="image-item fas fa-dot-circle"></i>
+
+            <a href="#section1">Active Task</a>
+          </div>
+        </li>
+        <li class="active">
+          <div class="image-block">
+            <i class="image-item fas fa-award"></i>
+
+
+            <a href="#section1">Assigned Task</a>
+          </div>
+        </li>
+        <li class="active">
+          <div class="image-block">
+            <i class="image-item fas fa-hand-holding"></i>
+
+
+            <a href="#section1">Upcoming</a>
+          </div>
+        </li>
+        <li class="active">
+          <div class="image-block">
+            <i class="image-item fas fa-calendar-day"></i>
+
+            <a href="#section1">Overdue</a>
+          </div>
+        </li>
+        <li class="active">
+          <div class="image-block">
+            <i class="image-item fas fa-check"></i>
+
+
+            <a href="#section1">Completed</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div id="task-add">
+      <button class="button"  onclick="location.href='{% url 'task_web:new' %}'" type="button">
+        Add Task +
+      </button>
+
+    </div>
+  </div>
+
+
+</div>
+{% block javascript %}
+
+{% endblock %}

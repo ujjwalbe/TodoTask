@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-sm-7 grey-white">
+  <div class="row input-group search-bar">
+    <input type="text" class="form-control" placeholder="Search Task">
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="button">
+        <span class="glyphicon glyphicon-search"></span>
+      </button>
+    </span>
+  </div>
+  <div class="project-title">
+    <h1 id="project-title-id">Add New List</h1>
+  </div>
+  <!--Task list starts here -->
+  <div class="task-scroll-div task-list">
+    <!--Task list start-->
+
+    <form method="post" enctype="multipart/form-data" novalidate>
+      <!-- Name input -->
+      {% csrf_token %}
+      {{form|crispy}}
+      <br>
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block ">Create List</button>
+      </form>
+
+    <!--Task list end-->
+  </div>
+  <!-- Task List ends here-->
+</div>
+
+<!--Task Details sections -->
+<div class="col-sm-5 ">
+  <div class="row description">
+    <img id="profile-pic" src="https://www.jq22.com/demo/Simplify_Admin201702282213/images/profile/profile1.jpg" alt="">
+    <br>
+    <div class="task-text" style="margin-top: 100px;">
+      <div id='task-view'>
+
+    </div>
+  </div>
+</div>
+<!--Description Ends Here-->
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

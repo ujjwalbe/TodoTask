@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+
+
+{% block content %}
+<div class="col-sm-7 grey-white">
+  <div class="row input-group search-bar">
+    <input type="text" class="form-control" placeholder="Search Task">
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="button">
+        <span class="glyphicon glyphicon-search"></span>
+      </button>
+    </span>
+  </div>
+  <div class="project-title">
+    <h1 id="project-title-id"></h1>
+    <p id="project-description">
+      Wow such empty! Please select a project!
+    </p>
+  </div>
+  <!--Task list starts here -->
+  <div id="task-list-div" class="task-scroll-div task-list">
+    <!--Task list start-->
+
+
+    <!--Task list end-->
+  </div>
+  <!-- Task List ends here-->
+</div>
+
+<!--Task Details sections -->
+<div class="col-sm-5 ">
+  <div class="row description">
+    <img id="profile-pic" src="https://www.jq22.com/demo/Simplify_Admin201702282213/images/profile/profile1.jpg" alt="">
+    <br>
+    <div class="task-text" style="margin-top: 100px;">
+      <div id='task-view'>
+        <h3 id='task-details-title'>
+
+        </h3>
+        <h5>
+          <span id='task-date'></span> <span id='task-status'></span>
+        </h5>
+      </div>
+      <div class="task-details">
+        <div id="details-header" class="flex-container">
+
+        </div>
+        <div class="task-summary-div">
+          <p id='task-summary'>
+          </p>
+        </div>
+      </div>
+      <div class="notes-div">
+        <label for="input-notes">Notes</label>
+        <input id='input-notes' placeholder="Add note..." size="25" type="text" name='input-notes'>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Description Ends Here-->
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+  const taskTitle = document.getElementById("task-details-title");
+  const taskDate = document.getElementById("task-date");
+  const taskStatus = document.getElementById("task-status");
+  const taskSummary = document.getElementById("task-summary");
+  const taskHeader = document.getElementById("details-header");
+  const projectTitle = document.getElementById("project-title-id");
+  const projectDescription = document.getElementById("project-description");
+  const taskListDiv = document.getElementById("task-list-div");
+
+
+  function loadProject(clicked_id) {
+
+    url = `/api/v1/task/get/project/${clicked_id}`
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        projectTitle.innerHTML = data.name.charAt(0).toUpperCase() + data.name.slice(1);
+        projectDescription.innerHTML = data.description;
+        htmlDataList = []
+        data.tasks.forEach(task => {
+          htmlData = `<div id=${task.id} onclick="showDetails(this.id)" class="row task-card">
+      <div class="col-sm-10 card-container">
+        <h4>${task.name.charAt(0).toUpperCase() + task.name.slice(1)}</h4>
+        <p>${moment(task.created).format("LLL")}</p>
+        </div>
+        <div class="col-sm-2 card-status">
+          <p id="card-status-id">${task.status} Task</p></div></div>`
+          htmlDataList.push(htmlData)
+        });
+        taskListDiv.innerHTML = htmlDataList
+      });
+  }
+
+
+  function showDetails(clicked_id) {
+    url = `/api/v1/task/get/${clicked_id}`
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        taskTitle.innerHTML = data.name.charAt(0).toUpperCase() + data.name.slice(1);
+        taskDate.innerHTML = moment(data.created).format("LLL");
+        taskStatus.innerHTML = data.status.charAt(0).toUpperCase() + data.status.slice(1);
+        taskSummary.innerHTML = data.description;
+        taskHeader.innerHTML = `<p id='summary-tag'>Summary</p><button class="icon-button"><i class="fas fa-edit"></i></button >`
+      });
+
+  }
+
+
+
+
+
+</script>
+<!-- <script src="{% static 'tasks/home.js' %}"></script> -->
+{% endblock %}
