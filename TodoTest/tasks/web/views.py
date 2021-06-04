@@ -18,7 +18,6 @@ class CreateNewTask(views.View):
 
         if form.is_valid():
             task = form.save(commit=False)
-            task.project = Project.objects.all().first()
             task.save()
             return redirect(reverse_lazy("home"))
         return render(request, self.template_name, {"form": TaskForm()})

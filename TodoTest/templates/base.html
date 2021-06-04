@@ -31,20 +31,17 @@
 
 <body>
 
-	<div class="container-fluid">
-		<div class="row">
-			<!-- Side Bar  -->
-			<div class="col-sm-2 ">
+	<div class="s-layout">
+		<!-- Sidebar -->
+		{% include 'partials/_main_sidebar.html'%}
 
-				{% include 'partials/_main_sidebar.html'%}
-			</div>
-			<!-- Main Content Starts here-->
-			<div class="col-sm-10">
+		<!-- Content -->
+		<main class="s-layout__content">
+			<div>
 				{% block content %}
 				{% endblock content %}
 			</div>
-			<!--Main Contents Ends here-->
-		</div>
+		</main>
 	</div>
 	{% block javascript %}
 	{% endblock %}

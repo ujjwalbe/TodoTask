@@ -4,60 +4,72 @@
 
 
 {% block content %}
-<div class="col-sm-7 grey-white">
-  <div class="row input-group search-bar">
-    <input type="text" class="form-control" placeholder="Search Task">
-    <span class="input-group-btn">
-      <button class="btn btn-default" type="button">
-        <span class="glyphicon glyphicon-search"></span>
-      </button>
-    </span>
-  </div>
-  <div class="project-title">
-    <h1 id="project-title-id"></h1>
-    <p id="project-description">
-      Wow such empty! Please select a project!
-    </p>
-  </div>
-  <!--Task list starts here -->
-  <div id="task-list-div" class="task-scroll-div task-list">
-    <!--Task list start-->
-
-
-    <!--Task list end-->
-  </div>
-  <!-- Task List ends here-->
+<div class="header-nav">
+  <nav>
+    <ul>
+      <li>
+        <img id="profile-pic" src="https://www.jq22.com/demo/Simplify_Admin201702282213/images/profile/profile1.jpg"
+        alt="">
+      </li>
+    </ul>
+  </nav>
 </div>
+<div class="sub-section">
+  <section class="list-section">
 
-<!--Task Details sections -->
-<div class="col-sm-5 ">
-  <div class="row description">
-    <img id="profile-pic" src="https://www.jq22.com/demo/Simplify_Admin201702282213/images/profile/profile1.jpg" alt="">
-    <br>
-    <div class="task-text" style="margin-top: 100px;">
-      <div id='task-view'>
-        <h3 id='task-details-title'>
-
-        </h3>
-        <h5>
-          <span id='task-date'></span> <span id='task-status'></span>
-        </h5>
-      </div>
-      <div class="task-details">
-        <div id="details-header" class="flex-container">
-
-        </div>
-        <div class="task-summary-div">
-          <p id='task-summary'>
-          </p>
-        </div>
-      </div>
-      <div class="notes-div">
-        <label for="input-notes">Notes</label>
-        <input id='input-notes' placeholder="Add note..." size="25" type="text" name='input-notes'>
-      </div>
+    <div class="row input-group search-bar">
+      <input type="text" class="form-control" placeholder="Search Task">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">
+          <span class="glyphicon glyphicon-search"></span>
+        </button>
+      </span>
     </div>
-  </div>
+    <div class="project-title">
+      <h1 id="project-title-id"></h1>
+      <p id="project-description">
+        Wow such empty! Please select a project!
+      </p>
+    </div>
+    <!--Task list starts here -->
+    <div id="task-list-div" class="task-scroll-div task-list">
+      <!--Task list start-->
+
+
+      <!--Task list end-->
+    </div>
+    <!-- Task List ends here-->
+    <!-- Task List ends here-->
+
+  </section>
+  <!--Task Details sections -->
+  <section class="description">
+
+      <br>
+      <div class="task-text" style="margin-top: 100px;">
+        <div id='task-view'>
+          <h3 id='task-details-title'>
+
+          </h3>
+          <h5>
+            <span id='task-date'></span> <span id='task-status'></span>
+          </h5>
+        </div>
+        <div class="task-details">
+          <div id="details-header" class="flex-container">
+
+          </div>
+          <div class="task-summary-div">
+            <p id='task-summary'>
+            </p>
+          </div>
+        </div>
+        <div class="notes-div">
+          <label for="input-notes">Notes</label>
+          <input id='input-notes' placeholder="Add note..." size="25" type="text" name='input-notes'>
+        </div>
+      </div>
+  </section>
 </div>
 <!--Description Ends Here-->
 {% endblock %}
@@ -92,7 +104,7 @@
         <p>${moment(task.created).format("LLL")}</p>
         </div>
         <div class="col-sm-2 card-status">
-          <p id="card-status-id">${task.status} Task</p></div></div>`
+          <p id="card-status-id" style="background-color: ${task.status === 'upcoming'? '#004E64': task.status === 'active' ?  "#701FC1" :'#FA7921'};">${task.status.charAt(0).toUpperCase()+task.status.slice(1)} </p></div></div>`
           htmlDataList.push(htmlData)
         });
         taskListDiv.innerHTML = htmlDataList

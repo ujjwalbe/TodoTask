@@ -23,12 +23,12 @@ def create_task(
         "data": {
             "approval_status": status,
             "completed": completed,
-            "due_on": "2021-06-03 20:36:04.898888",
+            "due_on": str(datetime.datetime.now() + datetime.timedelta(days=2)),
             "liked": liked,
             "name": title,
             "notes": description,
             "projects": project_list,
-            "start_on": start_on,
+            "start_on": str(datetime.datetime.now()),
             "tags": [],
             "workspace": "1200402500257305",
         }
@@ -38,6 +38,7 @@ def create_task(
     data = json.dumps(obj)
     headers = {"Authorization": f"Bearer {ACCESS_TOKEN}"}
     resp = requests.post(endpoint, data=data, headers=headers).json()
+    print(resp)
     astask_id = resp['data']['gid']
     print(astask_id)
 
@@ -87,13 +88,18 @@ def update(project, project_obj, task_obj, asana_id ):
     print(tasks)
     add_task = []
     if len(tasks) > 0:
+        print(len(asana_task), "ASANA TASK", len(tasks), 'DB TASK')
         for task in asana_task:
-            for tsk in tasks:
-                if tsk.asana_task_id != task['gid']:
-                    add_task.append(task)
-    elif len(asana_task) >0:
-        for task in asana_task:
-            add_task.append(task)
+            tsk = task_obj.objects.filter(asana_task_id=task['gid'])
+            if len(tsk) is 0:
+                add_task.append(task)
+            # for tsk in tasks:
+            #     if tsk.asana_task_id != task['gid']:
+            #         add_task.append(task)
+    else:
+        if len(asana_task) >0:
+            for task in asana_task:
+                add_task.append(task)
     print(add_task)
     if len(add_task) > 0:
         for task in add_task:
